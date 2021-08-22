@@ -8,7 +8,7 @@ use yii\db\Migration;
  *
  * - `{{%user}}`
  */
-class m210822_024341_create_user_addresses_table extends Migration
+class m210822_081520_create_user_addresses_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -20,7 +20,7 @@ class m210822_024341_create_user_addresses_table extends Migration
             'user_id' => $this->integer(11)->notNull(),
             'address' => $this->string(255)->notNull(),
             'city' => $this->string(255)->notNull(),
-            'region' => $this->string(255)->notNull(),
+            'state' => $this->string(255)->notNull(),
             'country' => $this->string(255)->notNull(),
             'zipcode' => $this->string(255),
         ]);

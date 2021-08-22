@@ -7,10 +7,9 @@ use yii\db\Migration;
  * Has foreign keys to the tables:
  *
  * - `{{%products}}`
- * - `{{%products}}`
  * - `{{%orders}}`
  */
-class m210822_025328_create_order_items_table extends Migration
+class m210822_083802_create_order_items_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -19,29 +18,12 @@ class m210822_025328_create_order_items_table extends Migration
     {
         $this->createTable('{{%order_items}}', [
             'id' => $this->primaryKey(),
-            'product_name' => $this->string(255)->notNull(),
+            'product_name' => $this->string(255),
             'product_id' => $this->integer(11)->notNull(),
-            'unit_price' => $this->decimal(10, 2)->notNull(),
+            'unit_price' => $this->decimal(10, 2),
             'order_id' => $this->integer(11)->notNull(),
-            'quantity' => $this->integer(2)->notNull(),
+            'quantity' => $this->integer(2),
         ]);
-
-        // creates index for column `product_name`
-        $this->createIndex(
-            '{{%idx-order_items-product_name}}',
-            '{{%order_items}}',
-            'product_name'
-        );
-
-        // add foreign key for table `{{%products}}`
-        $this->addForeignKey(
-            '{{%fk-order_items-product_name}}',
-            '{{%order_items}}',
-            'product_name',
-            '{{%products}}',
-            'id',
-            'CASCADE'
-        );
 
         // creates index for column `product_id`
         $this->createIndex(
@@ -83,18 +65,6 @@ class m210822_025328_create_order_items_table extends Migration
      */
     public function safeDown()
     {
-        // drops foreign key for table `{{%products}}`
-        $this->dropForeignKey(
-            '{{%fk-order_items-product_name}}',
-            '{{%order_items}}'
-        );
-
-        // drops index for column `product_name`
-        $this->dropIndex(
-            '{{%idx-order_items-product_name}}',
-            '{{%order_items}}'
-        );
-
         // drops foreign key for table `{{%products}}`
         $this->dropForeignKey(
             '{{%fk-order_items-product_id}}',

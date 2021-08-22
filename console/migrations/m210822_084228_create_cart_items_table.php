@@ -7,10 +7,9 @@ use yii\db\Migration;
  * Has foreign keys to the tables:
  *
  * - `{{%products}}`
- * - `{{%order_items}}`
  * - `{{%user}}`
  */
-class m210822_025557_create_cart_items_table extends Migration
+class m210822_084228_create_cart_items_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -20,7 +19,7 @@ class m210822_025557_create_cart_items_table extends Migration
         $this->createTable('{{%cart_items}}', [
             'id' => $this->primaryKey(),
             'product_id' => $this->integer(11)->notNull(),
-            'quantity' => $this->integer(2)->notNull(),
+            'quantity' => $this->integer(2),
             'user_id' => $this->integer(11)->notNull(),
         ]);
 
@@ -37,23 +36,6 @@ class m210822_025557_create_cart_items_table extends Migration
             '{{%cart_items}}',
             'product_id',
             '{{%products}}',
-            'id',
-            'CASCADE'
-        );
-
-        // creates index for column `quantity`
-        $this->createIndex(
-            '{{%idx-cart_items-quantity}}',
-            '{{%cart_items}}',
-            'quantity'
-        );
-
-        // add foreign key for table `{{%order_items}}`
-        $this->addForeignKey(
-            '{{%fk-cart_items-quantity}}',
-            '{{%cart_items}}',
-            'quantity',
-            '{{%order_items}}',
             'id',
             'CASCADE'
         );
@@ -90,18 +72,6 @@ class m210822_025557_create_cart_items_table extends Migration
         // drops index for column `product_id`
         $this->dropIndex(
             '{{%idx-cart_items-product_id}}',
-            '{{%cart_items}}'
-        );
-
-        // drops foreign key for table `{{%order_items}}`
-        $this->dropForeignKey(
-            '{{%fk-cart_items-quantity}}',
-            '{{%cart_items}}'
-        );
-
-        // drops index for column `quantity`
-        $this->dropIndex(
-            '{{%idx-cart_items-quantity}}',
             '{{%cart_items}}'
         );
 
