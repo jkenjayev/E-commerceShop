@@ -19,8 +19,16 @@ use yii\bootstrap4\ActiveForm ;
         'options' => ['rows' => 6],
         'preset' => 'basic'
     ]) ?>
-
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image', [
+            'template' => '
+                    <div class="custom-file">
+                        {input}
+                        {label}
+                        {error}
+                    </div>',
+            'labelOptions' => ['class' => 'custom-file-label'],
+            'inputOptions' => ['class' => 'custom-file-input']
+    ])->fileInput(['type' => 'file', 'class' => 'mb-3']) ?>
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true, 'type' => 'number']) ?>
 
