@@ -2,33 +2,37 @@
 
 use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm ;
+use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
 /* @var $form yii\bootstrap4\ActiveForm */
 ?>
 
-<div class="product-form p-4">
+<div class="product-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->widget(CKEditor::className(), [
-        'options' => ['rows' => 6],
-        'preset' => 'basic'
+            'options' => ['rows' => 6],
+            'preset' => 'basic'
     ]) ?>
+
     <?= $form->field($model, 'image', [
             'template' => '
-                    <div class="custom-file">
+                <div class="input-group mb-3">
+                    <div class="custom-file>">
                         {input}
                         {label}
-                        {error}
-                    </div>',
+                        {error}                       
+                    </div>  
+                </div> 
+            ',
             'labelOptions' => ['class' => 'custom-file-label'],
             'inputOptions' => ['class' => 'custom-file-input']
-    ])->fileInput(['type' => 'file', 'class' => 'mb-3']) ?>
+    ])->textInput(['type' => 'file']) ?>
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true, 'type' => 'number']) ?>
 

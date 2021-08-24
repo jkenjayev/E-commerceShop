@@ -2,7 +2,11 @@
 
 namespace common\models;
 
+use common\models\query\ProductQuery;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Yii;
+use yii\helpers\FileHelper;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%products}}".
@@ -18,13 +22,18 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  *
- * @property CartItems[] $cartItems
- * @property OrderItems[] $orderItems
+ * @property CartItem[] $cartItems
+ * @property OrderItem[] $orderItems
  * @property User $createdBy
  * @property User $updatedBy
  */
 class Product extends \yii\db\ActiveRecord
 {
+    /**
+     * @var UploadedFile
+     */
+    public  $imageFile;
+
     /**
      * {@inheritdoc}
      */
@@ -42,6 +51,11 @@ class Product extends \yii\db\ActiveRecord
             [['name', 'price','image', 'status'], 'required'],
             [['description'], 'string'],
             [['price'], 'number'],
+            ['imageFile', 'image', 'extensions' => 'png, jpg, jpeg, webp',
+                'minWidth' => 100, 'maxWidth' => 1000,
+                'minHeight' => 100, 'maxHeight' => 1000,
+                'maxSize' => 1024 * 1024 * 10
+            ],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 2000],
@@ -60,6 +74,7 @@ class Product extends \yii\db\ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
             'image' => 'Product image',
+            'imageFile' => 'Product image',
             'price' => 'Price',
             'status' => 'Published',
             'created_at' => 'Created At',
@@ -76,7 +91,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getCartItems()
     {
-        return $this->hasMany(CartItems::className(), ['product_id' => 'id']);
+        return $this->hasMany(CartItem::className(), ['product_id' => 'id']);
     }
 
     /**
@@ -86,7 +101,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getOrderItems()
     {
-        return $this->hasMany(OrderItems::className(), ['product_id' => 'id']);
+        return $this->hasMany(OrderItem::className(), ['product_id' => 'id']);
     }
 
     /**
@@ -111,10 +126,10 @@ class Product extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return \common\models\query\ProductQuery the active query used by this AR class.
+     * @return ProductQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \common\models\query\ProductQuery(get_called_class());
+        return new ProductQuery(get_called_class());
     }
 }
