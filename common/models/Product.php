@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\query\ProductQuery;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Yii;
+use yii\helpers\BaseVarDumper;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
@@ -21,6 +22,7 @@ use yii\web\UploadedFile;
  * @property int|null $updated_at
  * @property int|null $created_by
  * @property int|null $updated_by
+ * @property UploadedFile $imageFile
  *
  * @property CartItem[] $cartItems
  * @property OrderItem[] $orderItems
@@ -29,10 +31,8 @@ use yii\web\UploadedFile;
  */
 class Product extends \yii\db\ActiveRecord
 {
-    /**
-     * @var UploadedFile
-     */
-    public  $imageFile;
+    /* @var UploadedFile */
+   public $imageFile;
 
     /**
      * {@inheritdoc}
